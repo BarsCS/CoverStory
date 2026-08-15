@@ -1,0 +1,30 @@
+{% load widget_tweaks %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Register{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+</head>
+<body class="m-0 p-0 bg-[#1b1b1b]">
+    {% block content %}
+    <div class="flex w-full h-lvh justify-center items-center">
+        <div class="flex flex-col flex-1 border w-100 h-150 min-h-0 overflow-y-auto ml-5 mr-5 border-white shadow-[#888686] shadow-sm rounded-md items-center justify-around">
+            <h1 class="text-white text-4xl">Register</h1>
+            <form action="" method="post" class="flex flex-col mt-5 h-100 w-full items-center justify-center gap-2">
+                {% render_field user_form.username placeholder='Username (barsfel)' class="text-gray-400 border w-[90%] shadow-[#888686] shadow-sm rounded-md p-2" %}
+                {% render_field profile_form.name placeholder='Name (Barsfel)' class="text-gray-400 border w-[90%] shadow-[#888686] shadow-sm rounded-md p-2" %}
+                {% render_field user_form.email placeholder='Email' class="text-gray-400 border w-[90%] shadow-[#888686] shadow-sm rounded-md p-2" %}
+                {% render_field user_form.password placeholder='Password' class="text-gray-400 border w-[90%] shadow-[#888686] shadow-sm rounded-md p-2" %}
+                {% render_field user_form.password2 placeholder='Repeat password' class="mb-10 text-gray-400 border w-[90%] shadow-[#888686] shadow-sm rounded-md p-2" %}
+                {% csrf_token %}
+                <input type="submit" value="Register" class="text-white w-[90%] border rounded-md p-2 shadow-[#888686] shadow-sm">
+            </form>
+        </div>
+    </div>
+    {% endblock content %}
+</body>
+</html>
