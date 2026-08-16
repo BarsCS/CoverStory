@@ -13,7 +13,7 @@ class EmailAuthenticationBackend(BaseBackend):
             return None
 
         except (User.DoesNotExist, User.MultipleObjectsReturned):
-            return None 
+            return None
 
 
     def get_user(self, user_id):

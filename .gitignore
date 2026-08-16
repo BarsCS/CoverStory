@@ -1,6 +1,7 @@
 settings.py
 
 __pycache__/
+clients/
 migrations/
 .venv/
 node_modules/
