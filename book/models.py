@@ -11,6 +11,7 @@ class Book(models.Model):
     published_date = models.DateField()
     genre = TaggableManager(blank=True)
     annotation = models.TextField(max_length=4000)
+    cover = models.ImageField(upload_to='covers/', blank=True, null=True)
     bookmarks = models.ManyToManyField(User, related_name='user_bookmarks')
 
     def __str__(self):
