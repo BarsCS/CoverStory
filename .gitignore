@@ -2,6 +2,7 @@ settings.py
 
 __pycache__/
 clients/
+media/
 migrations/
 .venv/
 node_modules/

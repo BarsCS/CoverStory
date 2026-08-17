@@ -14,7 +14,7 @@ class BookAdmin(admin.ModelAdmin):
     ]
     list_filter = ['genre']
     prepopulated_fields = {
-        'slug': ('title',)
+        'slug': ('title', 'author')
     }
 
 @admin.register(UserBook)
