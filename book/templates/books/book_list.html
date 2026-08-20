@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Books{% endblock title %}
+
+{% block head %}
+<script src="{% static "js/listbooks.js" %}" defer></script>
+{% endblock head %}
+
+{% block content %}
+<div class="filter-parent">
+    <div class="filter">
+    </div>
+</div>
+<div class="parent-books-list">
+    <div class="books-list">
+        {% include "./list.html" %}
+    </div>
+</div>
+{% endblock content %}

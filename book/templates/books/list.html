@@ -1,0 +1,12 @@
+{% load thumbnail %}
+
+{% block content %}
+    {% for book in books %}
+        <div class="book">
+            <a href="#">
+                <img src="{% thumbnail book.cover 150x225 crop %}" alt="">
+            </a>
+            {% comment %} <p class="book-title">{{ book.title }}</p> {% endcomment %}
+        </div>
+    {% endfor %}
+{% endblock content %}

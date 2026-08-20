@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Books{% endblock title %}</title>
+    <script src="https://kit.fontawesome.com/bf5d8dcf95.js" crossorigin="anonymous"></script>
+    {% comment %} <link rel="stylesheet" href="{% static 'src/output.css' %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'src/main.css' %}">
+    {% block head %}{% endblock head %}
+</head>
+<body>
+    <div class="page-container">
+        <header class="header">
+            <nav>
+                <span class="logo"><a href="{% url "book:list" %}">CoverStory</a></span>
+                <input class="search" type="search" name="" id="">
+                <p class="menu">Menu</p>
+                <ul class="nav-links">
+                    <li>
+                        <a href="{% url "book:list" %}" class="{% if section == 'books' %}section-select{% endif %}">Books</a>
+                    </li>
+                    {% if not request.user.is_authenticated %}
+                    <li>
+                        <a href="{% url "account:login" %}">Log in</a>
+                    </li>
+                    <li>
+                        <a href="{% url "account:register" %}">Create account</a>
+                    </li>
+
+                    {% else %}
+                    <li>
+                        <form action="{% url "account:logout" %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Log out">
+                        </form>
+                    </li>
+                    <li>
+                        <a href="" class="">
+                            <i class="fa-regular fa-circle-user"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        <div class="main-content">
+            {% block content %}{% endblock content %}
+        </div>
+    </div>
+</body>
+</html>

@@ -8,6 +8,5 @@ migrations/
 node_modules/
 
 *.json
-*.css
 
 __init__.py
