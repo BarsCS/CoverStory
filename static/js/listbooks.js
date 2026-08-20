@@ -5,7 +5,7 @@ let blockRequests = false;
 window.addEventListener('scroll', () => {
 
     let scrollPosition = window.innerHeight + window.scrollY;
-    let threshold = document.documentElement.scrollHeight - 200;
+    let threshold = document.documentElement.scrollHeight - 300;
 
     if(scrollPosition >= threshold && !emptyPage && !blockRequests) {
         blockRequests = true;

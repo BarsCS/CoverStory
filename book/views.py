@@ -1,12 +1,21 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_list_or_404, render
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from taggit.models import Tag
 
 from .models import Book
 
 def book_list(request: HttpRequest):
 
+    genre_slug = request.GET.get('genre')
+
     books = Book.objects.all()
+    genres = Book.genre.all()
+    if genre_slug:
+        books = books.filter(genre__slug=genre_slug)
+
+    books = books.prefetch_related('genre')
+
     paginator = Paginator(books, 24)
     page = request.GET.get('page')
     books_only = request.GET.get('books_only')
@@ -29,7 +38,8 @@ def book_list(request: HttpRequest):
             'books/list.html',
             {
                 'section': 'books',
-                'books': books
+                'books': books,
+                'genres': genres
             }
         )
 
@@ -38,6 +48,14 @@ def book_list(request: HttpRequest):
                 'books/book_list.html',
                 {
                     'section': 'books',
-                    'books': books
+                    'books': books,
+                    'genres': genres
                 }
             )
+
+def filter_by_genre(request: HttpRequest, genre_slug):
+
+    genre = Book.genre.filter(slug=genre_slug)
+    books = Book.objects.filter(genre__in = genre).all()
+
+    return books
