@@ -1,7 +1,8 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator, MinValueValidator
 from taggit.managers import TaggableManager
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Book(models.Model):
 
@@ -16,6 +17,10 @@ class Book(models.Model):
 
     def __str__(self):
         return f'{self.title} by {self.author}'
+
+    def get_absolute_url(self):
+        return reverse('book:detail', args=[self.slug])
+    
 
 class UserBook(models.Model):
 

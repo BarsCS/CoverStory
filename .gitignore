@@ -5,6 +5,7 @@ clients/
 media/
 migrations/
 .venv/
+.vscode/
 node_modules/
 
 *.json

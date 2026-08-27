@@ -188,3 +188,78 @@ header {
     justify-content: start;
     align-items: center;
 }
+
+/* DETAIL PAGE */
+.detail-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detail-main {
+    display: flex;
+    height: fit-content;
+    gap: 2em;
+}
+
+.detail-image {
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detail-main .about {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 30vw;
+    text-align: justify;
+    align-self: flex-start;
+}
+
+.separate-title {
+    width: 30vw;
+}
+
+.ratings-wrapper {
+    display: inline-block;
+}
+
+.ratings {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.ratings span{
+    cursor: pointer;
+    transition: color .2s, transform .2s;
+    font-size: 3rem;
+}
+
+.bookmark svg path{
+    fill: white;
+    transition: fill .2s, transform .2s;
+    transform-origin: center; 
+}
+
+.bookmark svg path:hover{
+    fill: orange;
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+.ratings span:hover{
+    color: orange;
+    transform: scale(1.3);
+}
+
+.ratings span:hover ~ span{
+    color: orange;
+}
+
+.title-wrapper {
+    display: flex;
+    justify-content: space-between;
+}

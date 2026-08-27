@@ -1,5 +1,5 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_list_or_404, render
+from django.shortcuts import get_list_or_404, get_object_or_404, render 
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from taggit.models import Tag
 
@@ -59,3 +59,15 @@ def filter_by_genre(request: HttpRequest, genre_slug):
     books = Book.objects.filter(genre__in = genre).all()
 
     return books
+
+def book_detail(request: HttpRequest, slug):
+
+    book = get_object_or_404(Book, slug=slug)
+
+    return render(
+        request,
+        'books/book/detail.html',
+        {
+            'book': book
+        }
+    )
