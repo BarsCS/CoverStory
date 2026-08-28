@@ -238,6 +238,30 @@ header {
     font-size: 3rem;
 }
 
+.ratings span:hover{
+    color: orange;
+    transform: scale(1.3);
+}
+
+
+.ratings span.selected:hover ~ span{
+    color: orange;
+}
+
+.ratings span.selected{
+    color: orange;
+}
+
+.ratings span[data-clicked = true] {
+    color: orange;
+}
+
+.ratings span[data-clicked] ~ span{
+    color: orange;
+}
+
+/* SVG */
+
 .bookmark svg path{
     fill: white;
     transition: fill .2s, transform .2s;
@@ -248,15 +272,6 @@ header {
     fill: orange;
     cursor: pointer;
     transform: scale(1.2);
-}
-
-.ratings span:hover{
-    color: orange;
-    transform: scale(1.3);
-}
-
-.ratings span:hover ~ span{
-    color: orange;
 }
 
 .title-wrapper {

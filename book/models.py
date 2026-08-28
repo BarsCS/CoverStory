@@ -56,4 +56,4 @@ class UserBook(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.book.title} - {self.user.username}'
+        return f'{self.book.title} - {self.user.username} - {self.rate}'
