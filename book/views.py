@@ -65,7 +65,15 @@ def filter_by_genre(request: HttpRequest, genre_slug):
 def book_detail(request: HttpRequest, slug):
 
     book = get_object_or_404(Book, slug=slug)
-    rate = UserBook.objects.values_list('rate', flat=True)[0]
+    rate = None
+
+    if request.user.is_authenticated:
+        user_book = UserBook.objects.filter(
+                user = request.user,
+                book = book
+            ).first()
+
+        rate = user_book.rate if user_book else None
 
     return render(
         request,
@@ -79,36 +87,32 @@ def book_detail(request: HttpRequest, slug):
 @login_required
 @require_POST
 def book_rate(request: HttpRequest):
-    print('called')
 
-    id = request.POST.get('id')
-    rate = request.POST.get('rate')
+    book_id = request.POST.get('book_id')
 
-    print(id)
-    print(rate)
+    try:
+        rate = int(request.POST.get('rate', ''))
+    except ValueError:
+        return JsonResponse({'status': 'error'}, status = 400)
 
-    if id and rate:
+    if rate not in UserBook.Rating.values:
+        return JsonResponse({'status': 'error'}, status = 400)
+
+    if book_id and rate:
 
         try:
-            book = Book.objects.get(id=id)
+            book = Book.objects.get(id=book_id)
 
-            try:
-                user_book, is_created = UserBook.objects.update_or_create(defaults= {
-                    'user': request.user,
-                    'book': book,
-                    'rate': rate,
-                }
-                )
+            user_book, is_created = UserBook.objects.update_or_create(
+                user = request.user,
+                book = book,
+                defaults={'rate': rate}
+            )
 
-                print(user_book)
-
-                return JsonResponse({'status': 'ok'})
-
-            except:
-                return JsonResponse({'status': 'error'})
+            return JsonResponse({'status': 'ok'})
 
         except (Book.DoesNotExist, Book.MultipleObjectsReturned):
-            return JsonResponse({'status': 'error'})
+            return JsonResponse({'status': 'error'}, status = 400)
 
-    return JsonResponse({'status': 'error'})
+    return JsonResponse({'status': 'error'}, status = 400)
             

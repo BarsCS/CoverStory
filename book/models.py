@@ -48,7 +48,7 @@ class UserBook(models.Model):
     pages_read = models.PositiveIntegerField(default=0)
     started_at = models.DateField(null=True, blank=True)
     finished_at = models.DateField(null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         constraints = [

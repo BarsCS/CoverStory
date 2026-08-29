@@ -13,12 +13,18 @@
         <div class="detail-image">
             <img src="{% thumbnail book.cover 300x0 crop %}" alt="">
             <div class="ratings-wrapper">
-                <div class="ratings" data-id={{ book.id }} data-rate={{ rate }}>
-                    <span {% if rate >= 5 %}class="selected"{% endif %} data-rating="5">&#9733;</span>
-                    <span {% if rate >= 4 %}class="selected"{% endif %} data-rating="4">&#9733;</span>
-                    <span {% if rate >= 3 %}class="selected"{% endif %} data-rating="3">&#9733;</span>
-                    <span {% if rate >= 2 %}class="selected"{% endif %} data-rating="2">&#9733;</span>
-                    <span {% if rate >= 1 %}class="selected"{% endif %} data-rating="1">&#9733;</span>
+                <div class="ratings" 
+                data-user="{{ request.user.is_authenticated|lower }}" 
+                data-bookid="{{ book.id }}" 
+                data-rate="{{ rate|default_if_none:'0' }}" 
+                data-rateurl ="{% url "book:rate" %}" 
+                data-loginurl="{% url "account:login" %}" 
+                data-bookurl="{{ book.get_absolute_url }}">
+                    <span data-rating="5">&#9733;</span>
+                    <span data-rating="4">&#9733;</span>
+                    <span data-rating="3">&#9733;</span>
+                    <span data-rating="2">&#9733;</span>
+                    <span data-rating="1">&#9733;</span>
                 </div>
             </div>
         </div>
