@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block title %}{{ profile.name }}{% endblock title %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="avatar-container">
+        <img class="avatar" src="{{ profile.avatar.url }}" alt="">
+        <h1>{{ profile.name }}</h1>
+    </div>
+    <div class="books-list">
+        {% for book in user_books %}
+        <div class="book">
+            <a href="{{ book.get_absolute_url }}">
+                <img src="{% thumbnail book.book.cover 150x225 crop %}" alt="">
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

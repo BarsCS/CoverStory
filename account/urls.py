@@ -9,7 +9,8 @@ app_name = 'account'
 
 urlpatterns = [
     path('', include('django.contrib.auth.urls')),
-    path('register/', views.register, name='register')
+    path('register/', views.register, name='register'),
+    path('<str:username>/', views.profile, name='profile'),
 ]
 
 if settings.DEBUG:

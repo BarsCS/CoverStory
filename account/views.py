@@ -1,9 +1,11 @@
 from django.http import HttpRequest
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 
 from .models import Profile
 from .forms import UserRegisterForm, ProfileRegisterForm
+
+from book.models import UserBook, Book
 
 
 def register(request: HttpRequest):
@@ -43,3 +45,18 @@ def register(request: HttpRequest):
         }
     )
 
+
+def profile(request: HttpRequest, username):
+
+    profile = get_object_or_404(Profile, user__username = username)
+
+    user_books = UserBook.objects.filter(user=request.user).select_related('book', 'user')
+
+    return render(
+        request,
+        'profiles/profile.html',
+        {
+            'profile': profile,
+            'user_books': user_books
+        }
+    )
