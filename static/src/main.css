@@ -4,18 +4,6 @@
       "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-gray-100: oklch(96.7% 0.003 264.542);
-    --color-gray-200: oklch(92.8% 0.006 264.531);
-    --color-gray-300: oklch(87.2% 0.01 258.338);
-    --color-gray-400: oklch(70.7% 0.022 261.325);
-    --color-white: #fff;
-    --spacing: 0.25rem;
-    --text-4xl: 2.25rem;
-    --text-4xl--line-height: calc(2.5 / 2.25);
-    --radius-md: 0.375rem;
-    --drop-shadow-2xl: 0 25px 25px rgb(0 0 0 / 0.15);
-    --default-font-family: var(--font-sans);
-    --default-mono-font-family: var(--font-mono);
     --navbar-height: 3em;
   }
 
@@ -302,4 +290,151 @@ header {
     border: 1;
     border-radius: 1em;
     background-color: #373737;
+}
+
+.follow {
+    display: inline-block;
+    padding: 0.5em;
+    background-color: #373737;
+    border-radius: 0.4em;
+    transition: transform .2s, background-color .2s;
+}
+
+.follow:hover {
+    transform: scale(1.2);
+    transform-origin: center;
+    background-color: #404040;
+}
+
+/* LOGIN */
+
+.login-body {
+    margin: 0;
+    padding: 0;
+    background-color: #1b1b1b;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    height: 100dvh;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    display: flex;
+    flex-direction: column;
+    width: 25rem; /* аналог Tailwind w-100 */
+    height: 25rem; /* аналог Tailwind h-100 */
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+    border: 1px solid #ffffff;
+    box-shadow: 0 1px 2px 0 #888686;
+    border-radius: 0.375rem;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.login-title {
+    color: #ffffff;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    margin: 0;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.form-input {
+    color: #9ca3af;
+    border: 1px solid #ffffff;
+    background-color: transparent;
+    width: 90%;
+    box-shadow: 0 1px 2px 0 #888686;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    margin-bottom: 0.75rem;
+    outline: none;
+}
+
+.form-input-password {
+    margin-bottom: 2.5rem;
+}
+
+.form-input:focus {
+    color: #ffffff;
+    border-color: #e5e7eb;
+}
+
+.btn-submit {
+    color: #ffffff;
+    background-color: transparent;
+    width: 90%;
+    border: 1px solid #ffffff;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    box-shadow: 0 1px 2px 0 #888686;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-submit:hover {
+    background-color: #ffffff;
+    color: #1b1b1b;
+}
+
+/* REGISTER */
+
+.register-body {
+    margin: 0;
+    padding: 0;
+    background-color: #1b1b1b;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.register-container {
+    display: flex;
+    width: 100%;
+    height: 100dvh; /* замість h-lvh */
+    justify-content: center;
+    align-items: center;
+}
+
+.register-card {
+    display: flex;
+    flex-direction: column;
+    width: 25rem; /* аналог Tailwind w-100 */
+    height: 30rem; /* аналог Tailwind h-100 */
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+    border: 1px solid #ffffff;
+    box-shadow: 0 1px 2px 0 #888686;
+    border-radius: 0.375rem;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.register-title {
+    color: #ffffff;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    text-align: center;
+    margin: 0;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.25rem;
+    height: 25rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }

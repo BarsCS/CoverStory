@@ -7,18 +7,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Login{% endblock title %}</title>
-    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    <link rel="stylesheet" href="{% static 'src/main.css' %}">
 </head>
-<body class="m-0 p-0 bg-[#1b1b1b]">
+<body class="login-body">
     {% block content %}
-    <div class="flex w-full h-lvh justify-center items-center">
-        <div class="flex flex-col w-100 h-100 border ml-5 mr-5 border-white shadow-[#888686] shadow-sm rounded-md items-center justify-around">
-            <h1 class="text-white text-4xl">Log in</h1>
-            <form action="" method="post" class="flex flex-col w-full items-center">
-                {% render_field form.username placeholder='Username' class="text-gray-400 border w-[90%] shadow-[#888686] shadow-sm rounded-md p-2 mb-3" %}
-                {% render_field form.password placeholder='Password' class="text-gray-400 border w-[90%] shadow-[#888686] shadow-sm rounded-md p-2 mb-10" %}
+    <div class="login-container">
+        <div class="login-card">
+            <h1 class="login-title">Log in</h1>
+            <form action="" method="post" class="login-form">
                 {% csrf_token %}
-                <input type="submit" value="Log in" class="text-white w-[90%] border rounded-md p-2 shadow-[#888686] shadow-sm">
+                {% render_field form.username placeholder='Username' class="form-input" %}
+                {% render_field form.password placeholder='Password' class="form-input form-input-password" %}
+                <input type="submit" value="Log in" class="btn-submit">
             </form>
         </div>
     </div>
