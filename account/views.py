@@ -1,11 +1,12 @@
-from django.http import HttpRequest
+from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
+from django.views.decorators.http import require_POST
 
-from .models import Profile
+from .models import Profile, Follow
 from .forms import UserRegisterForm, ProfileRegisterForm
 
-from book.models import UserBook, Book
+from book.models import UserBook
 
 
 def register(request: HttpRequest):
@@ -60,3 +61,31 @@ def profile(request: HttpRequest, username):
             'user_books': user_books
         }
     )
+
+@require_POST
+def follow(request: HttpRequest):
+
+    action = request.POST.get('action')
+    profile_id = request.POST.get('profile_id')
+
+    if action and profile_id:
+        try:
+            profile_to = Profile.objects.get(id=profile_id)
+            profile_from = Profile.objects.get(user_id=request.user.pk)
+
+        except (Profile.DoesNotExist, Profile.MultipleObjectsReturned):
+            return JsonResponse({'status': 'error', 'detail': 'Profile doesn\'t exist or multiple objects was returned'}, status=500)
+
+        if action == 'follow':
+            try:
+                Follow.objects.create(user_from=profile_from, user_to=profile_to)
+            except BaseException:
+                return JsonResponse({'status': 'error', 'detail': 'This relationship already exists'}, status=400)
+        elif action == 'unfollow':
+            Follow.objects.filter(user_from=profile_from, user_to=profile_to).delete()
+        else:
+            return JsonResponse({'status': 'error', 'detail': 'Incorrect action'}, status=400)
+            
+        return JsonResponse({'status': 'ok'}, status=203)
+
+    return JsonResponse({'status': 'error', 'detail': 'Action or id isn\'t provided'}, status=400)

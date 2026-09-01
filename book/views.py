@@ -115,4 +115,4 @@ def book_rate(request: HttpRequest):
             return JsonResponse({'status': 'error'}, status = 400)
 
     return JsonResponse({'status': 'error'}, status = 400)
-            
+        
