@@ -326,8 +326,8 @@ header {
 .login-card {
     display: flex;
     flex-direction: column;
-    width: 25rem; /* аналог Tailwind w-100 */
-    height: 25rem; /* аналог Tailwind h-100 */
+    width: 25rem;
+    height: 25rem;
     margin-left: 1.25rem;
     margin-right: 1.25rem;
     border: 1px solid #ffffff;
@@ -401,7 +401,7 @@ header {
 .register-container {
     display: flex;
     width: 100%;
-    height: 100dvh; /* замість h-lvh */
+    height: 100dvh;
     justify-content: center;
     align-items: center;
 }
@@ -409,8 +409,8 @@ header {
 .register-card {
     display: flex;
     flex-direction: column;
-    width: 25rem; /* аналог Tailwind w-100 */
-    height: 30rem; /* аналог Tailwind h-100 */
+    width: 25rem;
+    height: 30rem;
     margin-left: 1.25rem;
     margin-right: 1.25rem;
     border: 1px solid #ffffff;

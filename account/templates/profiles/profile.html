@@ -15,6 +15,14 @@
     <div class="avatar-container">
       <img class="avatar" src="{{ profile.avatar.url }}" alt="" />
       <h1>{{ profile.name }}</h1>
+      <div class="stats">
+        <span class="total-followers">
+          {% with total_followers=profile.followers.all.count %}
+          <span class="total">{{ total_followers }}</span>
+          follower{{ total_followers|pluralize}}
+          {% endwith %}
+        </span>
+      </div>
       {% if request.user.is_authenticated %}
         {% with request_profile=request.user.profile %}
           {% if not request_profile == profile %}

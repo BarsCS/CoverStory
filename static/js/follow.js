@@ -45,6 +45,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 followButton.dataset.action = previousAction === 'follow' ? 'unfollow' : 'follow';
                 
                 followButton.innerHTML = previousAction === 'follow' ? 'Unfollow' : 'Follow';
+
+                let totalFollowers = document.querySelector('span.total-followers .total');
+                let total = parseInt(totalFollowers.innerHTML);
+                totalFollowers.innerHTML = previousAction === 'follow' ? total + 1 : total - 1;
             }
         })
         .catch((reason) => {
