@@ -1,5 +1,5 @@
 import Cookies from 'https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/+esm';
-const csrftoken = Cookies.get('csrftoken')
+const csrftoken = Cookies.get('csrftoken');
 
 let options = {
         method: 'POST',
@@ -11,11 +11,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     let followButton = document.querySelector('a.follow');
 
-    // let action = 'unfollow';
+    if (followButton == null) {
+        return;
+    }
+
     const URL = followButton.dataset.url;
     
-    followButton.addEventListener('click', (event) => {
-        event.preventDefault();
+    followButton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (followButton.hasAttribute('aria-disabled')) {
+            return false;
+        }
+
+        followButton.setAttribute('aria-disabled', 'true');
         
         let action = followButton.dataset.action;
         let profileId = followButton.dataset.profileid;
@@ -37,6 +46,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 
                 followButton.innerHTML = previousAction === 'follow' ? 'Unfollow' : 'Follow';
             }
+        })
+        .catch((reason) => {
+            alert('Error')
+        })
+        .finally(() => {
+            followButton.removeAttribute('aria-disabled');
         })
     })
 })
