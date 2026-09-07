@@ -1,0 +1,8 @@
+Django==6.1
+django-debug-toolbar==7.1.1
+django-taggit==6.1.0
+django-widget-tweaks==1.5.1
+easy-thumbnails==2.10.1
+pillow==12.3.0
+psycopg2-binary==2.9.12
+redis==8.1.0

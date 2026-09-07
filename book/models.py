@@ -15,6 +15,8 @@ class Book(models.Model):
     cover = models.ImageField(upload_to='covers/', default='no_cover.png', blank=True)
     bookmarks = models.ManyToManyField(User, related_name='user_bookmarks', blank=True)
 
+    views = models.PositiveIntegerField(default=0)
+
     def __str__(self):
         return f'{self.title} by {self.author}'
 

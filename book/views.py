@@ -3,21 +3,25 @@ from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from taggit.models import Tag
+from django.conf import settings
+
+import redis
 
 from .models import Book, UserBook
+
+r = redis.Redis(host = settings.REDIS_HOST, port = settings.REDIS_PORT, db = settings.REDIS_DB, decode_responses=True)
 
 def book_list(request: HttpRequest):
 
     genre_slug = request.GET.get('genre')
 
-    books = Book.objects.all()
+    books = Book.objects.all().order_by('-views')
     genres = Book.genre.all()
     if genre_slug:
         books = books.filter(genre__slug=genre_slug)
 
     books = books.prefetch_related('genre')
-
+    
     paginator = Paginator(books, 24)
     page = request.GET.get('page')
     books_only = request.GET.get('books_only')
@@ -66,6 +70,8 @@ def book_detail(request: HttpRequest, slug):
 
     book = get_object_or_404(Book, slug=slug)
     rate = None
+    
+    redis_key = f'book:{book.pk}:viewers'
 
     if request.user.is_authenticated:
         user_book = UserBook.objects.filter(
@@ -75,12 +81,36 @@ def book_detail(request: HttpRequest, slug):
 
         rate = user_book.rate if user_book else None
 
+        user_identifier = f'user:{request.user.pk}'
+
+    else:
+
+        if not request.session.session_key:
+            request.session.create()
+
+        user_identifier = f'session:{request.session.session_key}'
+
+    pipe = r.pipeline()
+
+    pipe.sadd(redis_key, user_identifier)
+
+    pipe.scard(redis_key)
+
+    results = pipe.execute()
+
+    is_new = results[0]
+    total_views = results[1]
+
+    if is_new:
+        r.zincrby('book:ranking', 1, book.pk)
+
     return render(
         request,
         'books/book/detail.html',
         {
             'book': book,
-            'rate': rate
+            'rate': rate,
+            'total_views': total_views
         }
     )
 
