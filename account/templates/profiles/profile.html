@@ -45,7 +45,16 @@
     <div class="books-list">
       {% for book in user_books %}
         <div class="book">
-          <a href="{{ book.get_absolute_url }}"><img src="{% thumbnail book.book.cover 150x225 crop %}" alt="" /></a>
+          <a href="{{ book.book.get_absolute_url }}"><img src="{% thumbnail book.book.cover 150x225 crop %}" alt="" /></a>
+          <div class="ratings-wrapper">
+                <div class="static-ratings">
+                    <span class="{% if book.rate <= 1 %}selected{% endif %}" style="font-size: 2.1em">&#9733;</span>
+                    <span class="{% if book.rate <= 2 %}selected{% endif %}" style="font-size: 2.1em">&#9733;</span>
+                    <span class="{% if book.rate <= 3 %}selected{% endif %}" style="font-size: 2.1em">&#9733;</span>
+                    <span class="{% if book.rate <= 4 %}selected{% endif %}" style="font-size: 2.1em">&#9733;</span>
+                    <span class="{% if book.rate <= 5 %}selected{% endif %}" style="font-size: 2.1em">&#9733;</span>
+                </div>
+            </div>
         </div>
       {% endfor %}
     </div>

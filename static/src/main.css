@@ -215,7 +215,12 @@ header {
     display: inline-block;
 }
 
-.ratings {
+.ratings{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.static-ratings{
     display: flex;
     flex-direction: row-reverse;
 }
@@ -224,6 +229,17 @@ header {
     cursor: pointer;
     transition: color .2s, transform .2s;
     font-size: 3rem;
+}
+
+
+.static-ratings span{
+    transition: color .2s, transform .2s;
+    font-size: 3rem;
+}
+
+.static-ratings span.selected{
+    font-size: 3rem;
+    color: orange;
 }
 
 .ratings span:hover{
