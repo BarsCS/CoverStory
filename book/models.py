@@ -1,8 +1,14 @@
+from venv import create
+
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.core.validators import MaxValueValidator, MinValueValidator
+
+def get_default_bookshelf():
+    bookshelf, _ = UserBookshelf.objects.get_or_create(name="Загальна")
+    return bookshelf.pk
 
 class Book(models.Model):
 
@@ -22,6 +28,17 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse('book:detail', args=[self.slug])
+
+
+class UserBookshelf(models.Model):
+
+    name = models.CharField(max_length=100)
+    description = models.TextField(max_length=4000, blank=True)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_bookshelves')
+
+    def __str__(self):
+        return f'Bookshelf {self.name} of {self.user.username}'
     
 
 class UserBook(models.Model):
@@ -40,6 +57,12 @@ class UserBook(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_books')
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book_users')
+    bookshelf = models.ForeignKey(
+        UserBookshelf,
+        on_delete=models.SET_DEFAULT,
+        default=get_default_bookshelf,
+        related_name='user_books'
+    )
 
     rate = models.PositiveSmallIntegerField(choices=Rating.choices, null=True, blank=True)
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.WANT_TO_READ)
@@ -51,6 +74,7 @@ class UserBook(models.Model):
     started_at = models.DateField(null=True, blank=True)
     finished_at = models.DateField(null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
     class Meta:
         constraints = [
