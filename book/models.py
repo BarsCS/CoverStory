@@ -1,14 +1,9 @@
-from venv import create
-
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-def get_default_bookshelf():
-    bookshelf, _ = UserBookshelf.objects.get_or_create(name="Загальна")
-    return bookshelf.pk
 
 class Book(models.Model):
 
@@ -59,8 +54,9 @@ class UserBook(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book_users')
     bookshelf = models.ForeignKey(
         UserBookshelf,
-        on_delete=models.SET_DEFAULT,
-        default=get_default_bookshelf,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
         related_name='user_books'
     )
 
@@ -75,6 +71,14 @@ class UserBook(models.Model):
     finished_at = models.DateField(null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+    def save(self, *args, **kwargs):
+        if not self.bookshelf:
+            default_bookshelf, _ = UserBookshelf.objects.get_or_create(name = 'General', user=self.user)
+
+            self.bookshelf = default_bookshelf
+
+        return super().save(*args, **kwargs)
 
     class Meta:
         constraints = [
