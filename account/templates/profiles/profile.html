@@ -7,13 +7,20 @@
 {% endblock %}
 
 {% block head %}
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/4.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
   <script type="module" src="{% static 'js/follow.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
   <div class="profile-container">
     <div class="avatar-container">
+      {% if profile.avatar.url == "/media/avatars/default/default.png" %}
+      <span>
+        <i class="fi fi-sr-user"></i>
+      </span>
+      {% else %}
       <img class="avatar" src="{{ profile.avatar.url }}" alt="" />
+      {% endif %}
       <h1>{{ profile.name }}</h1>
       <div class="stats">
         <span class="total-followers">
@@ -41,22 +48,28 @@
         {% endwith %}
       {% endif %}
     </div>
-
-    <div class="books-list">
-      {% for book in user_books %}
-        <div class="book">
-          <a href="{{ book.book.get_absolute_url }}"><img src="{% thumbnail book.book.cover 150x225 crop %}" alt="" /></a>
-          <div class="ratings-wrapper">
-                <div class="static-ratings">
-                    <span class="{% if book.rate <= 1 %}selected{% endif %}" style="font-size: 2.1em">&#9733;</span>
-                    <span class="{% if book.rate <= 2 %}selected{% endif %}" style="font-size: 2.1em">&#9733;</span>
-                    <span class="{% if book.rate <= 3 %}selected{% endif %}" style="font-size: 2.1em">&#9733;</span>
-                    <span class="{% if book.rate <= 4 %}selected{% endif %}" style="font-size: 2.1em">&#9733;</span>
-                    <span class="{% if book.rate <= 5 %}selected{% endif %}" style="font-size: 2.1em">&#9733;</span>
-                </div>
+    <div class="bookshelves">
+      {% for bookshelf in bookshelves %}
+      <div class="books-list">
+        <h1>{{ bookshelf.name }}</h1>
+        {% with books=bookshelf.user_books.all %}
+        {% for book in books %}
+          <div class="book">
+            <a href="{{ book.book.get_absolute_url }}"><img src="{% thumbnail book.book.cover 150x225 crop %}" alt="" /></a>
+            <div class="ratings-wrapper" style="width: ;">
+              <div class="static-ratings">
+                <span class="{% if book.rate <= 1 %}selected{% endif %}">&#9733;</span>
+                <span class="{% if book.rate <= 2 %}selected{% endif %}">&#9733;</span>
+                <span class="{% if book.rate <= 3 %}selected{% endif %}">&#9733;</span>
+                <span class="{% if book.rate <= 4 %}selected{% endif %}">&#9733;</span>
+                <span class="{% if book.rate <= 5 %}selected{% endif %}">&#9733;</span>
+              </div>
             </div>
-        </div>
+          </div>
+        {% endfor %}
+        {% endwith %}
+      </div>
       {% endfor %}
     </div>
-  </div>
+</div>
 {% endblock %}

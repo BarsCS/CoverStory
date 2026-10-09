@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Books{% endblock title %}</title>
     <script src="https://kit.fontawesome.com/bf5d8dcf95.js" crossorigin="anonymous"></script>
-    {% comment %} <link rel="stylesheet" href="{% static 'src/output.css' %}"> {% endcomment %}
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/4.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
     <link rel="stylesheet" href="{% static 'src/main.css' %}">
     {% block head %}{% endblock head %}
 </head>
@@ -39,7 +39,7 @@
                     </li>
                     <li>
                         <a href="{% url "account:profile" username=request.user.username %}" class="">
-                            <i class="fa-regular fa-circle-user"></i>
+                            <i class="fi fi-sr-user"></i>
                         </a>
                     </li>
                     {% endif %}

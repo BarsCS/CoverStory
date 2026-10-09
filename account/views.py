@@ -3,13 +3,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.db import IntegrityError
 
 from .models import Profile, Follow
 from .forms import UserRegisterForm, ProfileRegisterForm
 
-from book.models import UserBook
+from book.models import UserBook, UserBookshelf
 
 
 def register(request: HttpRequest):
@@ -53,12 +52,10 @@ def profile(request: HttpRequest, username):
 
     profile = get_object_or_404(Profile, user__username=username)
 
-    user_books = UserBook.objects.filter(user__profile=profile).select_related(
-        "book", "user"
-    )
+    bookshelves = UserBookshelf.objects.filter(user__profile = profile).all()
 
     return render(
-        request, "profiles/profile.html", {"profile": profile, "user_books": user_books}
+        request, "profiles/profile.html", {"profile": profile, 'bookshelves': bookshelves}
     )
 
 
