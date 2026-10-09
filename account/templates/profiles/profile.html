@@ -9,6 +9,7 @@
 {% block head %}
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/4.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
   <script type="module" src="{% static 'js/follow.js' %}" defer></script>
+  <script type="module" src="{% static 'js/edit_profile.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -16,10 +17,24 @@
     <div class="avatar-container">
       {% if profile.avatar.url == "/media/avatars/default/default.png" %}
       <span>
+        {% if request.user.profile == profile %}
+        <span class="edit" role="button" tabindex="0">
+          <input type="file" class="fileInput" style="display: none;" />
+          <i class="fi fi-sr-pencil"></i>
+        </span>
+        {% endif %}
         <i class="fi fi-sr-user"></i>
       </span>
       {% else %}
-      <img class="avatar" src="{{ profile.avatar.url }}" alt="" />
+      <span>
+        {% if request.user.profile == profile %}
+        <span class="edit" role="button" tabindex="0">
+          <input type="file" class="fileInput" style="display: none;" />
+          <i class="fi fi-sr-pencil"></i>
+        </span>
+        {% endif %}
+        <img class="avatar" src="{{ profile.avatar.url }}" alt="" />
+      </span>
       {% endif %}
       <h1>{{ profile.name }}</h1>
       <div class="stats">

@@ -172,6 +172,33 @@ nav {
     transition: color .2s, background .2s, border-color .2s, transform .2s;
 }
 
+.avatar-container span.edit {
+    position: absolute;
+    cursor: pointer;
+    user-select: none;
+    right: 30px;
+}
+
+.fi.fi-sr-pencil {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(111, 89, 64, .14);
+    border-radius: 50%;
+    color: black;
+    background: rgba(255, 255, 255);
+    font-size: 1rem;
+    line-height: 1;
+    vertical-align: middle;
+    transition: color .2s, background .2s, border-color .2s, transform .2s;
+}
+
+.fi.fi-sr-pencil:hover {
+    background-color:  rgb(238, 238, 238);
+}
+
 span > .fi-sr-user {
     display: inline-flex;
     align-items: center;
@@ -498,6 +525,11 @@ span > .fi-sr-user {
     border-radius: 16px;
     background: rgba(255, 255, 255, .5);
     text-align: center;
+}
+
+
+.avatar-container span{
+    position: relative;
 }
 
 .avatar {

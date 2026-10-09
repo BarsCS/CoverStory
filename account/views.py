@@ -1,4 +1,5 @@
-from django.http import HttpRequest, JsonResponse
+from django.core.files import uploadedfile
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_POST
@@ -10,6 +11,20 @@ from .forms import UserRegisterForm, ProfileRegisterForm
 
 from book.models import UserBook, UserBookshelf
 
+@login_required
+@require_POST
+def edit_profile(request: HttpRequest):
+
+    profile_image = request.FILES.get("avatar")
+
+    if not profile_image:
+        return JsonResponse({"status": "Failed"}, status=400)
+    
+    profile = Profile.objects.get(user__username = request.user.username)
+
+    profile.save(update_fields=['avatar'])
+
+    return JsonResponse({"status": "OK"})
 
 def register(request: HttpRequest):
 
