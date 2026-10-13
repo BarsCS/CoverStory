@@ -22,6 +22,8 @@ def edit_profile(request: HttpRequest):
     
     profile = Profile.objects.get(user__username = request.user.username)
 
+    profile.avatar = profile_image
+
     profile.save(update_fields=['avatar'])
 
     return JsonResponse({"status": "OK"})
